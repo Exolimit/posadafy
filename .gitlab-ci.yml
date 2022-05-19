@@ -12,16 +12,12 @@ cache:
 
 stages:
   - analyze_and_test
-  - build
 
 before_script:
   - export PATH="$PATH":"$HOME/.flutter-sdk/.pub-cache/bin"
   - flutter pub get
   - flutter pub global activate junitreport
-build:
-  stage: build
-  script: 
-    - flutter run
+
 analyze_and_test:
   stage: analyze_and_test
   script:
