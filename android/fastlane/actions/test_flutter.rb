@@ -7,7 +7,7 @@ module Fastlane
     class TestFlutterAction < Action
       def self.run(params)
         # fastlane will take care of reading in the parameter and fetching the environment variable:
-        UI.message "Acto acto pide contacto"
+        UI.message "Testing flutter app"
 
         # sh "shellcommand ./path"
         sh "echo flutter test"
