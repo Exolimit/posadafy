@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.take_a_break">
+    package="com.exolimit.posadafy">
    <application
         android:label="take_a_break"
         android:name="${applicationName}"

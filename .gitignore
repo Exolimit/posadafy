@@ -44,3 +44,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+
+gradle.properties
+.env.default
+fastlane/report.xml
+**/service-account-google-developer.json
+captures
