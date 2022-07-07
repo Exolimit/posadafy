@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+class SearchScreen extends StatelessWidget {
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.green,
+      color: Colors.red,
     );
   }
 }
