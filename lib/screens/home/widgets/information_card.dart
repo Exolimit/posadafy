@@ -11,8 +11,7 @@ class InformationCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        width: 200,
-        color: const Color.fromRGBO(26, 182, 92, 0.6),
+        color: const Color.fromRGBO(26, 182, 92, 0.7),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

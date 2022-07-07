@@ -33,7 +33,7 @@ class _HomeBody extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (index) {
       case 0:
-        return const HomeScreen();
+        return HomeScreen();
       case 1:
         return const SearchScreen();
       case 2:
@@ -41,7 +41,7 @@ class _HomeBody extends StatelessWidget {
       case 3:
         return const ProfilePage();
       default:
-        return const HomeScreen();
+        return HomeScreen();
     }
   }
 }
