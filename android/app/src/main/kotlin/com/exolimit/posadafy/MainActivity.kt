@@ -1,4 +1,4 @@
-package com.example.take_a_break
+package com.exolimit.posadafy
 
 import io.flutter.embedding.android.FlutterActivity
 
