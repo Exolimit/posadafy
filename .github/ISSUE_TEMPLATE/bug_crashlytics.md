@@ -10,7 +10,7 @@ labels: 'Type: bug'
 ## Titulo (Título en Crashlytics. Ejemplo: 'PlaceListFragment.kt line 333')
 [Link de Crashlytics](https://...)
 
-> Recuerda añadir el link de este issue en las notas del error en Crashlytics
+> Recuerda añadir el link de este issue en las notas del error en Crashlytics para tener registro y cerrarlo en caso de que este issue también se cierre
 
 ## Otra información util
 ...

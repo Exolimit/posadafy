@@ -19,7 +19,6 @@ labels: 'Type: bug'
 1.
 2.
 3.
-4.
 
 ## Dispositivo:
 (Completa la siguiente información si la posees)
