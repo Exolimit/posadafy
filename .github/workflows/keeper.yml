@@ -1,0 +1,41 @@
+# 
+# This wrokflow will run on every pull request to the develop branch
+# 
+
+name: Keeper workflow
+
+## Actions that will be executed on
+on:  
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
+jobs:
+  
+  # 
+  # chek.yml workflow
+  # Run everity time in this workflow and generate an output in case the test were sucessfully
+  # 
+  check:
+    uses: ./.github/workflows/check.yml
+
+
+  # 
+  # deploy.yml
+  # Run if the pull request has the tag release and the output of the check.yml workflow is succesfully
+  # 
+  deploy:
+    if: ((github.event.pull_request.merged == true) && (contains(github.ref, 'refs/tags/')))
+    needs: check
+    uses: ./.github/workflows/deploy.yml
+    secrets: inherit
+
+
