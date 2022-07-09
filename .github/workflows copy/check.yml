@@ -1,0 +1,39 @@
+# 
+# Workflow that run the unit test and generate an output in case the test were sucessfully
+# 
+
+name: Unit tests
+
+## Event triggers
+on:
+  workflow_call:
+    outputs:
+      result:
+        description: "The result of the test"
+        value: ${{ jobs.unit_tests_job.result }}
+
+jobs:
+
+  unit_tests_job:
+    runs-on: ubuntu-latest
+    outputs:
+      result: ${{ steps.unit_tests_step.result }}
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v2
+
+      - id: unit_tests_step
+        name: Unit tests
+        # Run the test and set the result
+        run: |
+          ./gradlew --version
+          if ./gradlew test; then
+            echo "::set-output name=result::0"
+            echo "Tests passed"
+            exit 0
+          else
+            echo "::set-output name=result::1"
+            echo "Tests failed"
+            exit 1
+          fi
+          echo "Workflow check finished"
