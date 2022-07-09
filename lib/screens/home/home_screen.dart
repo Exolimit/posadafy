@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:take_a_break/screens/home/widgets/posada_app_bar.dart';
 import 'package:take_a_break/screens/home/widgets/welcome_text.dart';
+import 'widgets/category_buttons.dart';
 import 'widgets/room_slider.dart';
-import 'widgets/rooms_types_button.dart';
 import 'widgets/search_hab.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -30,19 +30,7 @@ class HomeScreen extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.05,
-              child: ListView.builder(
-                addAutomaticKeepAlives: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: options.length,
-                itemBuilder: (context, int index) {
-                  return RoomTypeButton(
-                    index: index,
-                  );
-                },
-              ),
-            ),
+            CategoryButtons(options: options),
             const SizedBox(
               height: 15,
             ),
