@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../provider/providers.dart';
-import '../../widgets/widgets.dart';
+import '../../shared/widgets.dart';
 import '../screens.dart';
 
 class HomePage extends StatelessWidget {
@@ -35,7 +35,7 @@ class _HomeBody extends StatelessWidget {
       case 0:
         return HomeScreen();
       case 1:
-        return const SearchScreen();
+        return SearchScreen();
       case 2:
         return const ReservationPage();
       case 3:
