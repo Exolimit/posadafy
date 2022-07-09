@@ -8,10 +8,10 @@ name: Keeper workflow
 on:  
   push:
     branches:
-      - develop
+      - development
   pull_request:
     branches:
-      - develop
+      - development
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
