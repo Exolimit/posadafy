@@ -48,8 +48,6 @@ jobs:
       id: decrypt_files
       run: |
         echo "Decrypting files..."
-        echo "$(pwd)"
-        echo "$(ls -R)"
         echo "${{ secrets.KEY_PROPERTIES_CONTENT }}" > android/key.properties
 
         echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > android/service-account-google-developer.json
@@ -59,7 +57,6 @@ jobs:
         echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks.asc
         gpg -d --passphrase "${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}" --batch android/app/upload-keystore.jks.asc > android/app/upload-keystore.jks
 
-        echo "$(ls -R)"
         echo "Finished decrypting files"
     - uses: actions/setup-java@v1
       with:
@@ -79,8 +76,9 @@ jobs:
     - run: flutter pub get
     - run: flutter test
     - run: |
-        echo "$(ls -R)"
         flutter build appbundle
+        echo "$(ls -R)"
+        
 
     - uses: r0adkll/upload-google-play@v1
       with:
