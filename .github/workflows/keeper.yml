@@ -106,4 +106,8 @@ jobs:
     # Use fastlane to sign and upload the app
     - name: Sign and upload
       id: sign_and_upload
-      run: bundle exec fastlane build
+      run: |
+        pwd
+        cd android
+        pwd
+        bundle exec fastlane build
