@@ -55,7 +55,8 @@ jobs:
       id: decrypt_files
       run: |
         echo "Decrypting files..."
-        echo "ls -R"
+        echo "$(pwd)"
+        echo "$(ls -R)"
         echo "${{ secrets.KEY_PROPERTIES_CONTENT }}" > android/key.properties
 
         echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > android/service-account-google-developer.json
