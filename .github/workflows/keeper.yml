@@ -63,8 +63,9 @@ jobs:
         echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks
 
         echo "${{ secrets.ENV_DEFAULT_CONTENT }}" > .env.default
-
+        echo $(pwd)
         cd android/
+        echo $(pwd)
         echo "Finished decrypting files"
 
     # Set up ruby
@@ -87,7 +88,7 @@ jobs:
     - name: Setup fastlane
       id: set_up_fastlane
       run: |
-        pwd
+        echo $(pwd)
         gem install bundler:2.3
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
@@ -107,7 +108,7 @@ jobs:
     - name: Sign and upload
       id: sign_and_upload
       run: |
-        pwd
+        echo $(pwd)
         cd android
-        pwd
+        echo $(pwd)
         bundle exec fastlane build
