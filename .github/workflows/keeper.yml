@@ -84,4 +84,4 @@ jobs:
         track: internal
         status: completed
         inAppUpdatePriority: 3
-        mappingFile: build/app/outputs/bundle/release/mapping.txt
+        mappingFile: build/app/outputs/mapping/release/mapping.txt
