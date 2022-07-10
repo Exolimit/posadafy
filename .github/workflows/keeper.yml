@@ -54,9 +54,11 @@ jobs:
 
         echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > android/service-account-google-developer.json
 
-        echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks
-
         echo "${{ secrets.ENV_DEFAULT_CONTENT }}" > .env.default
+
+        echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks.asc
+        gpg -d --passphrase "${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}" --batch android/app/upload-keystore.jks.asc > android/app/upload-keystore.jks
+
         echo "$(ls -R)"
         echo "Finished decrypting files"
     - uses: actions/setup-java@v1
