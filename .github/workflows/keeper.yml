@@ -64,12 +64,45 @@ jobs:
 
         echo "${{ secrets.ENV_DEFAULT_CONTENT }}" > .env.default
 
+        cd android/
         echo "Finished decrypting files"
 
-    - run: flutter build apk --debug --split-per-abi
-    - name: Push APK to Releases
-      uses: ncipollo/release-action@v1
+    # Set up ruby
+    - name: Set up ruby
+      uses: ruby/setup-ruby@v1
       with:
-        artifacts: "build/app/outputs/apk/debug/*.apk"
-        token: ${{ secrets.TOKEN }}
+        ruby-version: '2.7.2'
 
+    # Gem caching
+    - name: Gem caching
+      id: gem_cache
+      uses: actions/cache@v2
+      continue-on-error: true
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    # Installing bundler to use fastlane on the machine
+    - name: Setup fastlane
+      id: set_up_fastlane
+      run: |
+        gem install bundler:2.3
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+    # Gradle cache
+    - name: Cache Gradle packages
+      id: cache_gradle_packages
+      uses: actions/cache@v2
+      continue-on-error: true
+      with:
+        path: |
+          ~/.gradle/caches/modules-*
+          ~/.gradle/caches/jars-*
+          ~/.gradle/caches/build-cache-*
+        key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
+
+    # Use fastlane to sign and upload the app
+    - name: Sign and upload
+      id: sign_and_upload
+      run: bundle exec fastlane build
