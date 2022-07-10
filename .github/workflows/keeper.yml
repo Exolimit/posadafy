@@ -55,7 +55,7 @@ jobs:
       id: decrypt_files
       run: |
         echo "Decrypting files..."
-
+        echo "ls -R"
         echo "${{ secrets.KEY_PROPERTIES_CONTENT }}" > android/key.properties
 
         echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > android/service-account-google-developer.json
@@ -63,9 +63,7 @@ jobs:
         echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks
 
         echo "${{ secrets.ENV_DEFAULT_CONTENT }}" > .env.default
-        echo $(pwd)
-        cd android/
-        echo $(pwd)
+
         echo "Finished decrypting files"
 
     - uses: actions/setup-java@v2
