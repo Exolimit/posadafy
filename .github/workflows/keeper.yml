@@ -51,6 +51,21 @@ jobs:
         flutter-version: '3.0.3'
     - run: flutter pub get
     - run: flutter test
+    - name: Decrypt files
+      id: decrypt_files
+      run: |
+        echo "Decrypting files..."
+
+        echo "${{ secrets.KEY_PROPERTIES_CONTENT }}" > android/key.properties
+
+        echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > android/service-account-google-developer.json
+
+        echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks
+
+        echo "${{ secrets.ENV_DEFAULT_CONTENT }}" > .env.default
+
+        echo "Finished decrypting files"
+
     - run: flutter build apk --debug --split-per-abi
     - name: Push APK to Releases
       uses: ncipollo/release-action@v1
