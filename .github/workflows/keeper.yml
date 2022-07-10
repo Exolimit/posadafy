@@ -87,6 +87,7 @@ jobs:
     - name: Setup fastlane
       id: set_up_fastlane
       run: |
+        pwd
         gem install bundler:2.3
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
