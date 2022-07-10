@@ -71,11 +71,6 @@ jobs:
 
     - run: flutter test
 
-    - uses: actions/setup-java@v2
-      with:
-        distribution: 'zulu'
-        java-version: '11'
-
     - run: |
         flutter build appbundle
         echo "$(ls -R)"
@@ -86,9 +81,7 @@ jobs:
         serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}
         packageName: com.exolimit.posadafy
         releaseFiles: build/app/outputs/bundle/release/app-release.aab
-        track: production
-        status: inProgress
-        inAppUpdatePriority: 2
-        userFraction: 0.33
-        whatsNewDirectory: distribution/whatsnew
+        track: internal
+        status: completed
+        inAppUpdatePriority: 3
         mappingFile: build/app/outputs/bundle/release/mapping.txt
