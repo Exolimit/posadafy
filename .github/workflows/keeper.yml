@@ -76,7 +76,9 @@ jobs:
         flutter-version: '3.0.3'
     - run: flutter pub get
     - run: flutter test
-    - run: flutter build appbundle
+    - run: |
+        echo "$(ls -R)"
+        flutter build appbundle
 
     - uses: r0adkll/upload-google-play@v1
       with:
