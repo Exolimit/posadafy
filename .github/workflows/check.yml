@@ -22,18 +22,14 @@ jobs:
       - name: Checkout repository and submodules
         uses: actions/checkout@v2
 
-      - id: unit_tests_step
-        name: Unit tests
-        # Run the test and set the result
-        run: |
-          ./gradlew --version
-          if ./gradlew test; then
-            echo "::set-output name=result::0"
-            echo "Tests passed"
-            exit 0
-          else
-            echo "::set-output name=result::1"
-            echo "Tests failed"
-            exit 1
-          fi
-          echo "Workflow check finished"
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.0.3'
+      
+      - run: flutter pub get
+
+      - run: flutter test
