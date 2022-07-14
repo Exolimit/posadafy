@@ -10,71 +10,48 @@ on:
 
 
 jobs:
-
   main_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+      - uses: actions/checkout@v1
 
-      # Decrypt release keystore and release properties file from github secrets
       - name: Decrypt files
         id: decrypt_files
         run: |
           echo "Decrypting files..."
+          echo "${{ secrets.KEY_PROPERTIES_CONTENT }}" > android/key.properties
 
-          echo "${{ secrets.FASTLANE_ENVIROMENT_CONTENT }}" > .env.default.asc
+          echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > android/service-account-google-developer.json
 
-          gpg -d --passphrase "${{ secrets.FASTLANE_ENVIROMENT_PASSWORD }}" --batch .env.default.asc > .env.default
+          echo "${{ secrets.ENV_DEFAULT_CONTENT }}" > .env.default
 
-          echo "${{ secrets.RELEASE_KEYSTORE_CONTENT }}" > public_keystore.jks.asc
+          echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks.asc
+          gpg -d --passphrase "${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}" --batch android/app/upload-keystore.jks.asc > android/app/upload-keystore.jks
 
-          gpg -d --passphrase "${{ secrets.RELEASE_KEYSTORE_PASSWORD }}" --batch public_keystore.jks.asc > app/public_keystore.jks
-
-          echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > service-account-google-developer.json.asc
-
-          gpg -d --passphrase "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_PASSWORD }}" --batch service-account-google-developer.json.asc > service-account-google-developer.json
-          
           echo "Finished decrypting files"
-
-      # Set up ruby
-      - name: Set up ruby
-        uses: ruby/setup-ruby@v1
+      
+      - uses: actions/setup-java@v1
         with:
-          ruby-version: '2.7.2'
+          java-version: '12.x'
 
-      # Gem caching
-      - name: Gem caching
-        id: gem_cache
-        uses: actions/cache@v2
-        continue-on-error: true
+      - uses: subosito/flutter-action@v2
         with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
+          flutter-version: '3.0.3'
+      
+      - run: flutter pub get
 
-      # Installing bundler to use fastlane on the machine
-      - name: Setup fastlane
-        id: set_up_fastlane
-        run: |
-          gem install bundler:2.3
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
+      - run: flutter test
 
-      # Gradle cache
-      - name: Cache Gradle packages
-        id: cache_gradle_packages
-        uses: actions/cache@v2
-        continue-on-error: true
+      - run: |
+          flutter build appbundle
+          echo "$(ls -R)"
+          
+      - uses: r0adkll/upload-google-play@v1
         with:
-          path: |
-            ~/.gradle/caches/modules-*
-            ~/.gradle/caches/jars-*
-            ~/.gradle/caches/build-cache-*
-          key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
-
-      # Use fastlane to sign and upload the app
-      - name: Sign and upload
-        id: sign_and_upload
-        run: bundle exec fastlane build
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}
+          packageName: com.exolimit.posadafy
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: production
+          status: completed
+          inAppUpdatePriority: 3
+          mappingFile: build/app/outputs/mapping/release/mapping.txt
