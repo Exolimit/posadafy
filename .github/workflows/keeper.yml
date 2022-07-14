@@ -35,7 +35,7 @@ jobs:
   # Run if the pull request has the tag release and the output of the check.yml workflow is succesfully
   # 
   deploy:
-    if: ((github.event.pull_request.merged == true) && (contains(github.ref, 'refs/tags/')))
+    if: github.event.pull_request.merged
     needs: check
     uses: ./.github/workflows/deploy.yml
     secrets: inherit
