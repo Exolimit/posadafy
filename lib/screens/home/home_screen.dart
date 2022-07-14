@@ -35,6 +35,10 @@ class HomeScreen extends StatelessWidget {
               height: 15,
             ),
             const RoomSlide(),
+            TextButton(
+              onPressed: () => throw Exception(),
+              child: const Text("Throw Test Exception"),
+            ),
           ],
         ),
       ),

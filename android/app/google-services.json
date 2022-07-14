@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "79656633282",
+    "project_id": "posadafy",
+    "storage_bucket": "posadafy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:79656633282:android:076597f2d34680b5008c5b",
+        "android_client_info": {
+          "package_name": "com.exolimit.posadafy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "79656633282-mv4eltj2fqp44qtqul1hrf3ogmro3vk3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDk92YyM4HBwUhVbBxrDOC8il1uW9uMe7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "79656633282-mv4eltj2fqp44qtqul1hrf3ogmro3vk3.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "79656633282-9h6hvo7vva5ic525vsjs2dkdp2sbjl53.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.takeABreak"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
