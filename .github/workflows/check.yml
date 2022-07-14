@@ -32,4 +32,12 @@ jobs:
       
       - run: flutter pub get
 
-      - run: flutter test
+      - run: |
+          if flutter test; then
+            echo "All tests passed! "
+            exit 0
+          else
+            echo "Something went wrong :c"
+            exit 1
+          fi
+          echo "Workflow check finished"
