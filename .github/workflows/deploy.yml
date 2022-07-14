@@ -1,0 +1,57 @@
+# 
+# Workflow that sign and deploy the Android app the the internal beta channel of Google Play Console
+# 
+
+name: Sign and deploy
+
+## Event triggers
+on:
+  workflow_call:
+
+
+jobs:
+  main_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Decrypt files
+        id: decrypt_files
+        run: |
+          echo "Decrypting files..."
+          echo "${{ secrets.KEY_PROPERTIES_CONTENT }}" > android/key.properties
+
+          echo "${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}" > android/service-account-google-developer.json
+
+          echo "${{ secrets.ENV_DEFAULT_CONTENT }}" > .env.default
+
+          echo "${{ secrets.UPLOAD_KEYSTORE_CONTENT }}" > android/app/upload-keystore.jks.asc
+          gpg -d --passphrase "${{ secrets.UPLOAD_KEYSTORE_PASSPHRASE }}" --batch android/app/upload-keystore.jks.asc > android/app/upload-keystore.jks
+
+          echo "Finished decrypting files"
+      
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.0.3'
+      
+      - run: flutter pub get
+
+      - run: flutter test
+
+      - run: |
+          flutter build appbundle
+          echo "$(ls -R)"
+          
+      - uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_GOOGLE_DEVELOPER_CONTENT }}
+          packageName: com.exolimit.posadafy
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: production
+          status: completed
+          inAppUpdatePriority: 3
+          mappingFile: build/app/outputs/mapping/release/mapping.txt
