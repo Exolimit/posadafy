@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.exolimit.posadafy">
    <application
-        android:label="take_a_break"
+        android:label="Posadafy"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity
