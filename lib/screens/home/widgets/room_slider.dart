@@ -14,24 +14,32 @@ class RoomSlide extends StatelessWidget {
         height: MediaQuery.of(context).size.height * 0.4,
         child: Swiper(
           itemBuilder: (BuildContext context, int index) {
-            return Stack(
-              children: [
-                SizedBox(
-                  height: double.infinity,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.network(
-                      "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg",
-                      fit: BoxFit.cover,
-                    ),
+            return InkWell(
+              onTap: () {
+                Navigator.pushNamed(context, 'roomDetailPage');
+              },
+              child: Stack(
+                children: [
+                  SizedBox(
+                    height: double.infinity,
+                    child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: const FadeInImage(
+                          fadeOutDuration: Duration(milliseconds: 100),
+                          fit: BoxFit.cover,
+                          image: NetworkImage(
+                            "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg",
+                          ),
+                          placeholder: AssetImage('assets/img/loading.gif'),
+                        )),
                   ),
-                ),
-                const Positioned(
-                  bottom: 20,
-                  left: 10,
-                  child: InformationCard(),
-                )
-              ],
+                  const Positioned(
+                    bottom: 20,
+                    left: 10,
+                    child: InformationCard(),
+                  )
+                ],
+              ),
             );
           },
           itemCount: 10,

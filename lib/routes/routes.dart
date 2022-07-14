@@ -10,5 +10,6 @@ Map<String, WidgetBuilder> getAppRoutes() {
     'loginPage': (BuildContext context) => const LoginPage(),
     'registerPage': (BuildContext context) => const RegisterPage(),
     'profilePage': (BuildContext context) => const ProfilePage(),
+    'roomDetailPage': (BuildContext context) => const DetailRoomPage(),
   };
 }
