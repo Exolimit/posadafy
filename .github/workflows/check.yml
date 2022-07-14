@@ -7,10 +7,7 @@ name: Unit tests
 ## Event triggers
 on:
   workflow_call:
-    outputs:
-      result:
-        description: "The result of the test"
-        value: ${{ jobs.unit_tests_job.result }}
+    
 
 jobs:
 
