@@ -30,11 +30,3 @@ jobs:
     uses: ./.github/workflows/check.yml
     secrets: inherit
 
-  # 
-  # deploy.yml
-  # Run if the pull request has the tag release and the output of the check.yml workflow is succesfully
-  # 
-  deploy:
-    needs: check
-    uses: ./.github/workflows/deploy.yml
-    secrets: inherit
