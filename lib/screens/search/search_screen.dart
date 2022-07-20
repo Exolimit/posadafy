@@ -32,10 +32,6 @@ class SearchScreen extends StatelessWidget {
             const SizedBox(
               height: 25,
             ),
-            const SearchHabButton(),
-            const SizedBox(
-              height: 25,
-            ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
               child: ListView.builder(
@@ -52,7 +48,7 @@ class SearchScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            const RoomSlide(),
+            const RoomCardHorizontal()
           ],
         ),
       ),
