@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:take_a_break/models/room.dart';
 
 
 class RoomCardHorizontal extends StatelessWidget {
 
+  final Room targetRoom;
 
-  const RoomCardHorizontal({Key? key}) : super(key: key);
+  const RoomCardHorizontal({Key? key, required this.targetRoom}) : super(key: key);
 
  @override
   Widget build(BuildContext context) {
@@ -18,20 +20,35 @@ class RoomCardHorizontal extends StatelessWidget {
         child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-                const Icon(Icons.album),
+                SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: FadeInImage(
+                              fadeOutDuration: const Duration(milliseconds: 100),
+                              fit: BoxFit.cover,
+                              image: NetworkImage(
+                                targetRoom.featuredImageUrl
+                              ),
+                              placeholder: const AssetImage('assets/img/loading.gif'),
+                            ),
+                  ),
+                ),
+  
                 const SizedBox(width: 10),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                         const  Text("Habitación presidencial", style: TextStyle(fontSize: 20.0)),
-                         const  Text("Loja, El pedestal", style: TextStyle(fontSize: 16.0)),
+                         Text(targetRoom.name, style: const TextStyle(fontSize: 20.0)),
+                         Text(targetRoom.location, style: const TextStyle(fontSize: 16.0)),
                         Row(
-                          children: const [
-                            Icon(Icons.star),
-                            Text("5.0"),
-                            SizedBox(width: 10),
-                            Text("4 345 reseñas")
+                          children:  [
+                            const Icon(Icons.star),
+                            Text(targetRoom.score.toString()),
+                            const SizedBox(width: 10),
+                            Text("${targetRoom.reviewsNumber} reseñas")
                           ],
                         )
                     ],
@@ -39,10 +56,10 @@ class RoomCardHorizontal extends StatelessWidget {
                 ),
 
                 Column(
-                  children: const [
-                      Text("\$205"),
-                      Text("/noche"),
-                      Icon(Icons.bookmark),
+                  children:  [
+                      Text("\$${targetRoom.pricePerNigth}"),
+                      const Text("/noche"),
+                      const Icon(Icons.bookmark),
                   ]
                 ),
                 
