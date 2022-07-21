@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:take_a_break/models/room.dart';
 
 
 import '../../shared/widgets.dart';
@@ -27,8 +28,10 @@ class SearchScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 25,
+            ),
             SearchBar(),
-            const SearchHabButton(),
             const SizedBox(
               height: 25,
             ),
@@ -52,7 +55,17 @@ class SearchScreen extends StatelessWidget {
             const SizedBox(
               height: 15,
             ),
-            const RoomSlide(),
+            Expanded(
+              child: ListView.builder(
+                  addAutomaticKeepAlives: true,
+                  scrollDirection: Axis.vertical,
+                  itemCount: 10,
+                  itemBuilder: (context, int index) {
+                    return RoomCardHorizontal(targetRoom: Room("Habitación presidencial", "Loja, El Pedestal", 4.7, 314, 205, "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg"),);
+                  },
+                ),
+            ),
+            
           ],
         ),
       ),
