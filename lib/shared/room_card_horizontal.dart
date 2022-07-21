@@ -15,8 +15,21 @@ class RoomCardHorizontal extends StatelessWidget {
     },
       child: Container(
           width: double.infinity,
-          decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
+          padding: const EdgeInsets.all(10),
+          margin: const EdgeInsets.symmetric(vertical: 10),
+          decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.all(Radius.circular(15)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.15),
+                  offset: const Offset(2, 5),
+                  blurRadius: 3,
+                  spreadRadius: 2
+              )
+              ]
+              ),
+              
         child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
