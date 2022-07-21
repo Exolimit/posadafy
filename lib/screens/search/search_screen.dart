@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:take_a_break/models/room.dart';
-
-
 import '../../shared/widgets.dart';
-import '../home/widgets/posada_app_bar.dart';
-import '../home/widgets/room_slider.dart';
 import '../home/widgets/rooms_types_button.dart';
 import '../home/widgets/search_hab.dart';
-import '../home/widgets/welcome_text.dart';
 
 class SearchScreen extends StatelessWidget {
-   SearchScreen({Key? key}) : super(key: key);
+  SearchScreen({Key? key}) : super(key: key);
 
   final List<String> options = [
     "Recomendados",
@@ -18,7 +13,6 @@ class SearchScreen extends StatelessWidget {
     "Dobles",
     "Familiar"
   ];
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +27,11 @@ class SearchScreen extends StatelessWidget {
             ),
             SearchBar(),
             const SizedBox(
-              height: 25,
+              height: 15,
             ),
             const SearchHabButton(),
             const SizedBox(
-              height: 25,
+              height: 20,
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
@@ -53,19 +47,42 @@ class SearchScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: const [
+                Text("Resultados ( 10 ) ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Urbanist')),
+              ],
+            ),
+            const SizedBox(
               height: 15,
             ),
             Expanded(
-              child: ListView.builder(
+              child: Container(
+                color: const Color.fromRGBO(232, 248, 239, 1),
+                child: ListView.builder(
                   addAutomaticKeepAlives: true,
                   scrollDirection: Axis.vertical,
                   itemCount: 10,
                   itemBuilder: (context, int index) {
-                    return RoomCardHorizontal(targetRoom: Room("Habitación presidencial", "Loja, El Pedestal", 4.7, 314, 205, "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg"),);
+                    return RoomCardHorizontal(
+                      targetRoom: Room(
+                          "Habitación presidencial",
+                          "Loja, El Pedestal",
+                          4.7,
+                          314,
+                          95,
+                          "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg"),
+                    );
                   },
                 ),
+              ),
             ),
-            
           ],
         ),
       ),

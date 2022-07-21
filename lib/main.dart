@@ -9,11 +9,12 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized(); //Esperar que inicie la aplicación.
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-  );
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
+  ); //Inicializar servicio de firebase dependiendo de la plataforma.
+  FlutterError.onError = FirebaseCrashlytics.instance
+      .recordFlutterFatalError; //Crear una instancia de error en caso que exista.
   runApp(const MyApp());
 }
 

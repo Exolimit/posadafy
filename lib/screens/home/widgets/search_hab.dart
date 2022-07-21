@@ -17,15 +17,19 @@ class SearchHabButton extends StatelessWidget {
         padding: const EdgeInsets.all(15.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          children: const [
-            Text(
-              "Buscar habitaciones",
-              style: TextStyle(fontWeight: FontWeight.w400),
+          children: [
+            Row(
+              children: const [
+                Text(
+                  "Preferencias de reserva",
+                  style: TextStyle(fontWeight: FontWeight.w400),
+                ),
+              ],
             ),
-            SizedBox(
+            const SizedBox(
               width: 20,
             ),
-            Icon(
+            const Icon(
               Icons.calendar_month_rounded,
             )
           ],

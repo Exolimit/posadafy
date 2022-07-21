@@ -37,7 +37,7 @@ class _HomeBody extends StatelessWidget {
       case 1:
         return SearchScreen();
       case 2:
-        return const ReservationPage();
+        return ReservationPage();
       case 3:
         return const ProfilePage();
       default:

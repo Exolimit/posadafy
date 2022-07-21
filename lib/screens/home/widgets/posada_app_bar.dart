@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../shared/widgets.dart';
+
 class PosadaAppBar extends StatelessWidget {
   const PosadaAppBar({
     Key? key,
@@ -11,12 +13,7 @@ class PosadaAppBar extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.10,
       child: Row(
         children: [
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: Image.asset(
-              "assets/img/logo.png",
-            ),
-          ),
+          const PosadaLogo(),
           const Expanded(child: SizedBox()),
           IconButton(
             icon: const Icon(Icons.notifications_none_outlined),
