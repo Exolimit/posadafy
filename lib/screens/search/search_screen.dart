@@ -28,7 +28,13 @@ class SearchScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 25,
+            ),
             SearchBar(),
+            const SizedBox(
+              height: 25,
+            ),
             const SearchHabButton(),
             const SizedBox(
               height: 25,
