@@ -1,5 +1,6 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:take_a_break/Styles/buttons.dart';
 
 class FilterRoomsPage extends StatelessWidget {
   const FilterRoomsPage({Key? key}) : super(key: key);
@@ -287,6 +288,23 @@ class FilterRoomsPage extends StatelessWidget {
                   ],
                 ),
               ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                    style: ButtonsDecoration.buttonPrimaryStyle(
+                        context: context, elevation: 3),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                      child: Text("Ver habitaciones"),
+                    )),
+              ],
             )
           ],
         ),

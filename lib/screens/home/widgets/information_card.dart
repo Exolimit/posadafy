@@ -45,13 +45,13 @@ class InformationCard extends StatelessWidget {
             RichText(
               textAlign: TextAlign.start,
               textScaleFactor: 1,
-              text: const TextSpan(
-                  text: '\$20',
-                  style: TextStyle(
+              text: TextSpan(
+                  text: '\$ ${room.price}',
+                  style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20,
                   ),
-                  children: [
+                  children: const [
                     TextSpan(
                         text: "/noche",
                         style: TextStyle(

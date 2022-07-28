@@ -71,10 +71,10 @@ class RoomCardHorizontal extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      Text("5"),
+                      const Text("5"),
                       const SizedBox(width: 5),
                       Text(
-                        "4 reseñas",
+                        "${targetRoom.reviewCount} reseñas",
                         style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Urbanist'),
@@ -86,7 +86,7 @@ class RoomCardHorizontal extends StatelessWidget {
             ),
             Column(children: [
               Text(
-                "20",
+                "\$ ${targetRoom.price}",
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 20,
