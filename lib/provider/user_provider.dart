@@ -101,7 +101,6 @@ class UserProvider extends ChangeNotifier {
 
       for (var book in bookingList) {
         final res = await api.getRoomInfo(book.idRoom);
-
         final roomJson = json.decode(res);
         Room tempRoom = Room.fromJson(roomJson);
         book.room = tempRoom;

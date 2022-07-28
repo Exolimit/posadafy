@@ -35,6 +35,7 @@ class LoginForm extends StatelessWidget {
           ),
           TextFormField(
             controller: _passwordController,
+            obscureText: true,
             decoration: InputFormDecoration.formInputDecoration(
               icon: Icons.lock_outline,
               labelText: 'Contraseña',

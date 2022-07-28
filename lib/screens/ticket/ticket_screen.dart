@@ -83,12 +83,8 @@ class TicketPage extends StatelessWidget {
                 style: ButtonsDecoration.buttonPrimaryStyle(
                     context: context, elevation: 3),
                 onPressed: () {
-                  if (popToHome) {
-                    Navigator.pushNamedAndRemoveUntil(
-                        context, 'homePage', (route) => false);
-                  } else {
-                    Navigator.pop(context);
-                  }
+                  Navigator.pushNamedAndRemoveUntil(
+                      context, 'homePage', (route) => false);
                 },
                 child: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
