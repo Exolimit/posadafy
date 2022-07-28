@@ -94,22 +94,25 @@ class PayPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                ElevatedButton(
-                    style: ButtonsDecoration.buttonPrimaryStyle(
-                        context: context, elevation: 3),
-                    onPressed: () async {
-                      final res = await userProvider.postBooking(bookingData);
-                      print(res);
-                      if (res) {
-                        showSuccesAlert(context);
-                      }
-                      //Navigator.pop(context);
-                    },
-                    child: const Padding(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                      child: Text("Continuar"),
-                    )),
+                userProvider.isBookingLoading
+                    ? const Center(child: CircularProgressIndicator())
+                    : ElevatedButton(
+                        style: ButtonsDecoration.buttonPrimaryStyle(
+                            context: context, elevation: 3),
+                        onPressed: () async {
+                          final res =
+                              await userProvider.postBooking(bookingData);
+                          print(res);
+                          if (res) {
+                            showSuccesAlert(context);
+                          }
+                          //Navigator.pop(context);
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 10),
+                          child: Text("Continuar"),
+                        )),
               ],
             ),
           ),
@@ -129,8 +132,7 @@ class PayPage extends StatelessWidget {
             TextButton(
               child: Text("Cerrar"),
               onPressed: () {
-                Navigator.pushNamedAndRemoveUntil(
-                    context, 'homePage', (route) => false);
+                Navigator.popAndPushNamed(context, 'ticketPage');
               },
             ),
           ],

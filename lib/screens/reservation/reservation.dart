@@ -193,7 +193,9 @@ class ReservationCard extends StatelessWidget {
                 ElevatedButton(
                     style: ButtonsDecoration.buttonPrimaryStyle(
                         context: context, elevation: 2),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, 'ticketPage');
+                    },
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Text("Mirar ticket"),

@@ -5,10 +5,11 @@ import 'package:take_a_break/Styles/buttons.dart';
 import '../../models/booking.dart';
 
 class TicketPage extends StatelessWidget {
-
-  final Booking targetBooking;
-
-  const TicketPage({Key? key, required this.targetBooking}) : super(key: key);
+  final bool popToHome;
+  const TicketPage({
+    Key? key,
+    required this.popToHome,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,57 +20,81 @@ class TicketPage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20),
-          child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-             const Text("Posadafy customer", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-             const SizedBox(height: 30,),
-             QrImage(
-                data: targetBooking.idBooking,
-                version: QrVersions.auto,
-                size: 200.0,
-              ),
-             const SizedBox(height: 30,),
-             Row(
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+            const Text("Posadafy customer",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            const SizedBox(
+              height: 30,
+            ),
+            QrImage(
+              data: "QRCODE",
+              version: QrVersions.auto,
+              size: 200.0,
+            ),
+            const SizedBox(
+              height: 30,
+            ),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  children: [
-                    const Text("Nombre", style: TextStyle(fontSize: 16)),
-                    Text("Andres Palacios", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  children: const [
+                    Text("Nombre", style: TextStyle(fontSize: 16)),
+                    Text("Andres Palacios",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
                     SizedBox(height: 16),
-                    const Text("Check in", style: TextStyle(fontSize: 16)),
-                    Text("Dic 16, 2024", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text("Check in", style: TextStyle(fontSize: 16)),
+                    Text("Dic 16, 2024",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
                     SizedBox(height: 16),
-                    const Text("Ocupantes", style: TextStyle(fontSize: 16)),
-                    const Text("3", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
+                    Text("Ocupantes", style: TextStyle(fontSize: 16)),
+                    Text("3",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold))
                   ],
                 ),
                 Column(
-                  children: [
-                    const Text("Teléfono", style: TextStyle(fontSize: 16)),
-                    Text("+593 987 654 321", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                  children: const [
+                    Text("Teléfono", style: TextStyle(fontSize: 16)),
+                    Text("+593 987 654 321",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
                     SizedBox(height: 16),
-                    const Text("Check out", style: TextStyle(fontSize: 16)),
-                    Text("Dic 16, 2024", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+                    Text("Check out", style: TextStyle(fontSize: 16)),
+                    Text("Dic 16, 2024",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold)),
                     SizedBox(height: 16),
-                    const Text("Habitación", style: TextStyle(fontSize: 16)),
-                    const Text("231", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold))
+                    Text("Habitación", style: TextStyle(fontSize: 16)),
+                    Text("231",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold))
                   ],
                 )
               ],
-             ),
-             const SizedBox(height: 100,),
-             ElevatedButton(
-                      style: ButtonsDecoration.buttonPrimaryStyle(
-                          context: context, elevation: 3),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 40, vertical: 10),
-                        child: Text("Descargar Ticket"),
-                      )),
-             ]),
+            ),
+            const SizedBox(
+              height: 100,
+            ),
+            ElevatedButton(
+                style: ButtonsDecoration.buttonPrimaryStyle(
+                    context: context, elevation: 3),
+                onPressed: () {
+                  if (popToHome) {
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, 'homePage', (route) => false);
+                  } else {
+                    Navigator.pop(context);
+                  }
+                },
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                  child: Text("Descargar Ticket"),
+                )),
+          ]),
         ),
       ),
     )));
