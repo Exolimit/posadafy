@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../../Styles/buttons.dart';
+import '../../../provider/rooms_provider.dart';
 
 class SearchHabButton extends StatelessWidget {
   const SearchHabButton({

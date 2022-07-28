@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/room.dart';
 import 'detail.dart';
 
 class DetailIcons extends StatelessWidget {
-  const DetailIcons({Key? key}) : super(key: key);
-
+  const DetailIcons({Key? key, required this.room}) : super(key: key);
+  final Room room;
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
@@ -28,27 +29,40 @@ class DetailIcons extends StatelessWidget {
           height: 15,
         ),
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 15),
+          padding: const EdgeInsets.symmetric(horizontal: 15),
           child: SizedBox(
             height: MediaQuery.of(context).size.height * 0.08,
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: const [
+              children: [
                 Detail(
                   icon: Icons.location_city,
-                  title: "Edificio 4",
+                  title: "Edificio ${room.floor}",
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 Detail(
                   icon: Icons.bed_outlined,
-                  title: "4 camas",
+                  title: room.bedsNumber == '1'
+                      ? "${room.bedsNumber} cama"
+                      : "${room.bedsNumber} camas",
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 Detail(
                   icon: Icons.bathtub_rounded,
-                  title: "2 baños",
+                  title: room.bathrooms == '1'
+                      ? '${room.bedsNumber} baño'
+                      : '${room.bedsNumber} baños',
+                ),
+                const SizedBox(
+                  width: 10,
                 ),
                 Detail(
                   icon: Icons.location_city,
-                  title: "200 mt2",
+                  title: "${room.extension} mt2",
                 ),
               ],
             ),

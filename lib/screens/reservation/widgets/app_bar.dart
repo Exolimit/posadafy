@@ -10,7 +10,7 @@ class AppBarReservation extends StatelessWidget {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.1,
       child: Row(
-        children: const [PosadaLogo()],
+        children: [PosadaLogo(widthSize: 150)],
       ),
     );
   }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/room.dart';
+
 class InformationCard extends StatelessWidget {
   const InformationCard({
     Key? key,
+    required this.room,
   }) : super(key: key);
+  final Room room;
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +20,9 @@ class InformationCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text(
-              "Habitación doble",
-              style: TextStyle(
+            Text(
+              'Habitacion ${room.type}',
+              style: const TextStyle(
                   color: Colors.white,
                   fontSize: 20,
                   fontWeight: FontWeight.bold),
@@ -26,12 +30,15 @@ class InformationCard extends StatelessWidget {
             const SizedBox(
               height: 7,
             ),
-            const Text(
-              "Wifi, Netflix",
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            ...room.service.map((service) {
+              return Text(
+                service.name,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400),
+              );
+            }),
             const SizedBox(
               height: 7,
             ),

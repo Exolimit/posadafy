@@ -27,8 +27,10 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  calendar_date_picker2: ^0.2.2
   card_swiper: ^2.0.4
   cupertino_icons: ^1.0.2
+  firebase_auth: ^3.6.0
   firebase_core: ^1.19.2
   firebase_crashlytics: ^2.8.5
   flutter:

@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 
-class RoomAppBar extends StatelessWidget {
-  const RoomAppBar({Key? key}) : super(key: key);
+import '../../../models/room.dart';
 
+class RoomAppBar extends StatelessWidget {
+  const RoomAppBar({Key? key, required this.room}) : super(key: key);
+  final Room room;
   @override
   Widget build(BuildContext context) {
-    return const SliverAppBar(
+    return SliverAppBar(
         centerTitle: true,
         elevation: 2.0,
-        backgroundColor: Color.fromRGBO(8, 31, 41, 1),
+        backgroundColor: const Color.fromRGBO(8, 31, 41, 1),
         expandedHeight: 200,
         floating: false,
         pinned: true,
@@ -16,9 +18,9 @@ class RoomAppBar extends StatelessWidget {
             background: FadeInImage(
           fit: BoxFit.fitWidth,
           image: NetworkImage(
-            "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg",
+            room.thumnail,
           ),
-          placeholder: AssetImage('assets/img/loading.gif'),
+          placeholder: const AssetImage('assets/img/loading.gif'),
         )));
   }
 }

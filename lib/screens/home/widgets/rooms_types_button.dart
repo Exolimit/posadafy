@@ -6,7 +6,9 @@ import '../../../Styles/buttons.dart';
 
 class RoomTypeButton extends StatelessWidget {
   final index;
-  const RoomTypeButton({Key? key, required this.index}) : super(key: key);
+  final String text;
+  const RoomTypeButton({Key? key, required this.index, required this.text})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class RoomTypeButton extends StatelessWidget {
             : ButtonsDecoration.buttonPrimaryStyle(
                 context: context, elevation: 1),
         child: Text(
-          "Recomendadas",
+          text,
           style: TextStyle(
               color: homeProvider.selectedOption != index
                   ? Theme.of(context).primaryColor

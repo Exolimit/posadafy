@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:take_a_break/models/room.dart';
+import 'package:provider/provider.dart';
+import '../../provider/rooms_provider.dart';
 import '../../shared/widgets.dart';
 import '../home/widgets/rooms_types_button.dart';
 import '../home/widgets/search_hab.dart';
 
 class SearchScreen extends StatelessWidget {
   SearchScreen({Key? key}) : super(key: key);
-
   final List<String> options = [
     "Recomendados",
     "Simples",
@@ -16,6 +16,7 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final roomProvider = Provider.of<RoomsProvider>(context);
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -42,6 +43,7 @@ class SearchScreen extends StatelessWidget {
                 itemBuilder: (context, int index) {
                   return RoomTypeButton(
                     index: index,
+                    text: options[index],
                   );
                 },
               ),
@@ -51,9 +53,9 @@ class SearchScreen extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: const [
-                Text("Resultados ( 10 ) ",
-                    style: TextStyle(
+              children: [
+                Text('Resultados ( ${roomProvider.roomList.length} ) ',
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Urbanist')),
@@ -68,16 +70,10 @@ class SearchScreen extends StatelessWidget {
                 child: ListView.builder(
                   addAutomaticKeepAlives: true,
                   scrollDirection: Axis.vertical,
-                  itemCount: 10,
+                  itemCount: roomProvider.roomList.length,
                   itemBuilder: (context, int index) {
                     return RoomCardHorizontal(
-                      targetRoom: Room(
-                          "Habitación presidencial",
-                          "Loja, El Pedestal",
-                          4.7,
-                          314,
-                          95,
-                          "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg"),
+                      targetRoom: roomProvider.roomList[index],
                     );
                   },
                 ),

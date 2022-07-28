@@ -13,7 +13,9 @@ class PosadaAppBar extends StatelessWidget {
       height: MediaQuery.of(context).size.height * 0.10,
       child: Row(
         children: [
-          const PosadaLogo(),
+          PosadaLogo(
+            widthSize: 150.0,
+          ),
           const Expanded(child: SizedBox()),
           IconButton(
             icon: const Icon(Icons.notifications_none_outlined),

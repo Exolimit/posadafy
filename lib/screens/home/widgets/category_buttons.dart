@@ -21,6 +21,7 @@ class CategoryButtons extends StatelessWidget {
         itemBuilder: (context, int index) {
           return RoomTypeButton(
             index: index,
+            text: options[index],
           );
         },
       ),

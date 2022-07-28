@@ -11,7 +11,7 @@ class RoomCardHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, 'roomDetailPage');
+        Navigator.pushNamed(context, 'roomDetailPage', arguments: targetRoom);
       },
       child: Container(
         width: double.infinity,
@@ -37,7 +37,7 @@ class RoomCardHorizontal extends StatelessWidget {
                 child: FadeInImage(
                   fadeOutDuration: const Duration(milliseconds: 100),
                   fit: BoxFit.cover,
-                  image: NetworkImage(targetRoom.featuredImageUrl),
+                  image: NetworkImage(targetRoom.thumnail),
                   placeholder: const AssetImage('assets/img/loading.gif'),
                 ),
               ),
@@ -48,7 +48,7 @@ class RoomCardHorizontal extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    targetRoom.name,
+                    'Habitación ${targetRoom.type}',
                     style: const TextStyle(
                       fontFamily: 'Urbanist',
                       fontWeight: FontWeight.bold,
@@ -71,10 +71,10 @@ class RoomCardHorizontal extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                      Text(targetRoom.score.toString()),
+                      Text("5"),
                       const SizedBox(width: 5),
                       Text(
-                        "${targetRoom.reviewsNumber} reseñas",
+                        "4 reseñas",
                         style: const TextStyle(
                             fontWeight: FontWeight.w500,
                             fontFamily: 'Urbanist'),
@@ -86,7 +86,7 @@ class RoomCardHorizontal extends StatelessWidget {
             ),
             Column(children: [
               Text(
-                "\$${targetRoom.pricePerNigth}",
+                "20",
                 style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 20,

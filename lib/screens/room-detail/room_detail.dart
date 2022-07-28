@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../Styles/buttons.dart';
+import '../../models/room.dart';
 import 'widgets/comments.dart';
 import 'widgets/detail_icon.dart';
 
@@ -14,6 +15,7 @@ class DetailRoomPage extends StatelessWidget {
   final double horizontalPadding = 15;
   @override
   Widget build(BuildContext context) {
+    final room = ModalRoute.of(context)!.settings.arguments as Room;
     return SafeArea(
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
@@ -29,7 +31,7 @@ class DetailRoomPage extends StatelessWidget {
               )),
           body: SafeArea(
               child: CustomScrollView(slivers: [
-            const RoomAppBar(),
+            RoomAppBar(room: room),
             SliverList(
                 delegate: SliverChildListDelegate([
               const SizedBox(
@@ -38,16 +40,22 @@ class DetailRoomPage extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(
                     horizontal: horizontalPadding, vertical: 7),
-                child: const RoomTopInformation(),
+                child: RoomTopInformation(
+                  room: room,
+                ),
               ),
               const SizedBox(
                 height: 5,
               ),
-              const PhotoSlider(),
+              PhotoSlider(
+                room: room,
+              ),
               const SizedBox(
                 height: 5,
               ),
-              const DetailIcons(),
+              DetailIcons(
+                room: room,
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
                 child: Column(

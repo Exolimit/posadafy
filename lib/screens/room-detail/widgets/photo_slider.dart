@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/room.dart';
+
 class PhotoSlider extends StatelessWidget {
   const PhotoSlider({
     Key? key,
+    required this.room,
   }) : super(key: key);
+  final Room room;
   final double horizontalPadding = 15;
   @override
   Widget build(BuildContext context) {
@@ -38,22 +42,24 @@ class PhotoSlider extends StatelessWidget {
           margin: const EdgeInsets.only(left: 15),
           height: MediaQuery.of(context).size.height * 0.15,
           child: ListView.builder(
-              itemCount: 10,
+              itemCount: room.images.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.only(right: 15.0, bottom: 10),
                   child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.45,
                       child: ClipRRect(
-                    borderRadius: BorderRadius.circular(15.0),
-                    child: const FadeInImage(
-                      fit: BoxFit.fitWidth,
-                      image: NetworkImage(
-                        "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg",
-                      ),
-                      placeholder: AssetImage('assets/img/loading.gif'),
-                    ),
-                  )),
+                        borderRadius: BorderRadius.circular(15.0),
+                        child: FadeInImage(
+                          fit: BoxFit.fitWidth,
+                          image: NetworkImage(
+                            room.images[index],
+                          ),
+                          placeholder:
+                              const AssetImage('assets/img/loading.gif'),
+                        ),
+                      )),
                 );
               }),
         ),

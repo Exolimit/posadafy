@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:take_a_break/provider/providers.dart';
+import 'package:take_a_break/provider/rooms_provider.dart';
 import 'package:take_a_break/routes/routes.dart';
 import 'package:take_a_break/themes/theme.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => BottomNavBarProvider()),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
+        ChangeNotifierProvider(create: (_) => RoomsProvider()),
       ],
       child: MaterialApp(
         title: 'Posadafy',
