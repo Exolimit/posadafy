@@ -14,7 +14,9 @@ class SearchHabButton extends StatelessWidget {
     return ElevatedButton(
       style:
           ButtonsDecoration.buttonPrimaryStyle(elevation: 2, context: context),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pushNamed(context, 'filterRoomsPage');
+      },
       child: Padding(
         padding: const EdgeInsets.all(15.0),
         child: Row(
