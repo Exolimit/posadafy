@@ -1,23 +1,25 @@
 import 'package:take_a_break/models/services.dart';
 
 class Room {
-  Room({
-    required this.bathrooms,
-    required this.bedsNumber,
-    required this.building,
-    required this.comments,
-    required this.disponibility,
-    required this.extension,
-    required this.floor,
-    required this.idRoom,
-    required this.images,
-    required this.location,
-    required this.number,
-    required this.service,
-    required this.state,
-    required this.thumnail,
-    required this.type,
-  });
+  Room(
+      {required this.bathrooms,
+      required this.bedsNumber,
+      required this.building,
+      required this.comments,
+      required this.disponibility,
+      required this.extension,
+      required this.floor,
+      required this.idRoom,
+      required this.images,
+      required this.location,
+      required this.number,
+      required this.service,
+      required this.state,
+      required this.thumnail,
+      required this.type,
+      required this.description,
+      required this.reviewCount,
+      required this.price});
 
   final String bathrooms;
   final String bedsNumber;
@@ -34,25 +36,30 @@ class Room {
   final String state;
   final String thumnail;
   final String type;
+  final String description;
+  final String reviewCount;
+  final String price;
 
   factory Room.fromJson(Map<String, dynamic> json) => Room(
-        bathrooms: json["bathrooms"].toString(),
-        bedsNumber: json["beds-number"].toString(),
-        building: json["building"],
-        comments: json["comments"],
-        disponibility: json["disponibility"].toString(),
-        extension: json["extension"].toString(),
-        floor: json["floor"].toString(),
-        idRoom: json["idRoom"],
-        images: List<String>.from(json["images"].map((x) => x)),
-        location: json["location"],
-        number: json["number"].toString(),
-        service:
-            List<Service>.from(json["service"].map((x) => Service.fromJson(x))),
-        state: json["state"].toString(),
-        thumnail: json["thumnail"],
-        type: json["type"].toString(),
-      );
+      bathrooms: json["bathrooms"].toString(),
+      bedsNumber: json["beds-number"].toString(),
+      building: json["building"],
+      comments: json["comments"],
+      disponibility: json["disponibility"].toString(),
+      extension: json["extension"].toString(),
+      floor: json["floor"].toString(),
+      idRoom: json["idRoom"],
+      images: List<String>.from(json["images"].map((x) => x)),
+      location: json["location"],
+      number: json["number"].toString(),
+      service:
+          List<Service>.from(json["service"].map((x) => Service.fromJson(x))),
+      state: json["state"].toString(),
+      thumnail: json["thumnail"],
+      type: json["type"].toString(),
+      reviewCount: json["reviewCount"].toString(),
+      description: json["description"],
+      price: json["price"].toString());
 
   Map<String, dynamic> toJson() => {
         "bathrooms": bathrooms,

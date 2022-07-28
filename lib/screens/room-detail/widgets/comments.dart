@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
+import '../../../models/room.dart';
+
 class CommentSection extends StatelessWidget {
-  const CommentSection({Key? key}) : super(key: key);
+  const CommentSection({Key? key, required this.room}) : super(key: key);
   final horizontalPadding = 15.0;
+  final Room room;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -27,8 +30,8 @@ class CommentSection extends StatelessWidget {
               "4.3",
               style: TextStyle(fontFamily: 'Urbanist'),
             ),
-            const Text(
-              "(200 reseñas)",
+            Text(
+              "(${room.reviewCount} reseñas)",
               style: TextStyle(fontFamily: 'Urbanist'),
             ),
             TextButton(

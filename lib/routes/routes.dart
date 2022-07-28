@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import '../screens/create_reservation/create_reservation.dart';
 import '../screens/filter_rooms/filter_rooms.dart';
 import '../screens/screens.dart';
 
@@ -10,5 +11,7 @@ Map<String, WidgetBuilder> getAppRoutes() {
     'profilePage': (BuildContext context) => const ProfilePage(),
     'roomDetailPage': (BuildContext context) => const DetailRoomPage(),
     'filterRoomsPage': (BuildContext context) => const FilterRoomsPage(),
+    'createReservationPage': (BuildContext context) =>
+        const CreateReservationPage(),
   };
 }

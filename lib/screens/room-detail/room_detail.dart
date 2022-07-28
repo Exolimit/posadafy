@@ -71,10 +71,7 @@ class DetailRoomPage extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    const Text(
-                        "Pariatur consectetur ex veniam cupidatat labore culpa. Ipsum reprehenderit dolor sint do non duis mollit velit consectetur non. Anim labore do veniam proident dolor occaecat et in duis. Quis qui non ipsum velit in quis ex ipsum aute. Elit sit est fugiat non eiusmod minim nulla nulla."),
-                    const Text(
-                        "Pariatur consectetur ex veniam cupidatat labore culpa. Ipsum reprehenderit dolor sint do non duis mollit velit consectetur non. Anim labore do veniam proident dolor occaecat et in duis. Quis qui non ipsum velit in quis ex ipsum aute. Elit sit est fugiat non eiusmod minim nulla nulla."),
+                    Text(room.description),
                     const SizedBox(
                       height: 15,
                     ),
@@ -86,7 +83,9 @@ class DetailRoomPage extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    const CommentSection(),
+                    CommentSection(
+                      room: room,
+                    ),
                     const Divider(
                       color: Colors.grey,
                     ),
@@ -99,7 +98,7 @@ class DetailRoomPage extends StatelessWidget {
                           width: 15,
                         ),
                         Text(
-                          "\$95",
+                          "\$ ${room.price}",
                           style: TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -118,7 +117,11 @@ class DetailRoomPage extends StatelessWidget {
                             child: ElevatedButton(
                           style: ButtonsDecoration.buttonPrimaryStyle(
                               context: context, elevation: 3),
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, "createReservationPage",
+                                arguments: room);
+                          },
                           child: const Padding(
                             padding: EdgeInsets.all(13.0),
                             child: Text(
