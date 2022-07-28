@@ -8,4 +8,10 @@ class ApiService {
     final response = await http.get(url);
     return response.body;
   }
+
+  getUserInfo(String uid) async {
+    final url = Uri.parse(baseUrl + "/user/$uid.json");
+    final response = await http.get(url);
+    return response.body;
+  }
 }
