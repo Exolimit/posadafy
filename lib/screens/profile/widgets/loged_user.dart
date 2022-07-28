@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../../../provider/user_provider.dart';
 import '../../reservation/widgets/app_bar.dart';
 
 class LogedUserProfile extends StatelessWidget {
@@ -9,6 +11,7 @@ class LogedUserProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
@@ -16,25 +19,26 @@ class LogedUserProfile extends StatelessWidget {
           children: [
             SizedBox(
               child: Column(
-                children: const [
-                  AppBarReservation(),
-                  SizedBox(height: 10),
+                children: [
+                  const AppBarReservation(),
+                  const SizedBox(height: 10),
                   CircleAvatar(
+                    backgroundColor: Colors.transparent,
                     radius: 60,
-                    backgroundImage: NetworkImage(
-                        'https://pbs.twimg.com/profile_images/1527133314196377600/YLnuI5CA_400x400.jpg'),
+                    backgroundImage:
+                        NetworkImage(userProvider.client!.profilePicture),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
-                    "Renato Balcazar",
-                    style: TextStyle(
+                    userProvider.client!.nombres,
+                    style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Urbanist'),
                   ),
-                  SizedBox(height: 10),
-                  Text("renatojobal@gmail.com",
-                      style: TextStyle(
+                  const SizedBox(height: 10),
+                  Text(userProvider.client!.email,
+                      style: const TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.w500,
                       ))

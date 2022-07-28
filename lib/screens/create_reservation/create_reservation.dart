@@ -320,7 +320,9 @@ class CreateReservationPage extends StatelessWidget {
                     ElevatedButton(
                         style: ButtonsDecoration.buttonPrimaryStyle(
                             context: context, elevation: 3),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'payPage');
+                        },
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: 40, vertical: 10),

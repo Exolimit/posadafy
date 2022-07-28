@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:take_a_break/Styles/buttons.dart';
+import 'package:take_a_break/provider/user_provider.dart';
+import 'package:take_a_break/shared/posdafy_logo.dart';
 
 import '../home/widgets/category_buttons.dart';
 import 'widgets/app_bar.dart';
@@ -14,46 +17,86 @@ class ReservationPage extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
     return Scaffold(
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: [
-              const AppBarReservation(),
-              CategoryButtons(options: options),
-              const SizedBox(height: 10),
-              Expanded(
-                  child: Container(
-                padding: const EdgeInsets.all(10),
-                color: const Color.fromRGBO(232, 248, 239, 1),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: const [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ReservationCard(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ReservationCard(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ReservationCard(),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      ReservationCard(),
-                    ],
-                  ),
+          child: userProvider.isLoged
+              ? UserReservations(options: options)
+              : Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const PosadaLogo(widthSize: 200),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Para reservar una habitación, debes iniciar sesión",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 32, fontFamily: 'Urbanist'),
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                        style: ButtonsDecoration.buttonPrimaryStyle(
+                            context: context, elevation: 3),
+                        onPressed: () {
+                          Navigator.pushNamed(context, 'loginPage');
+                        },
+                        child: const Padding(
+                          padding: EdgeInsets.all(15.0),
+                          child: Text("Iniciar sesión"),
+                        )),
+                    const SizedBox(height: 20),
+                  ],
                 ),
-              ))
-            ],
-          ),
         ),
       ),
+    );
+  }
+}
+
+class UserReservations extends StatelessWidget {
+  const UserReservations({
+    Key? key,
+    required this.options,
+  }) : super(key: key);
+
+  final List<String> options;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        const AppBarReservation(),
+        CategoryButtons(options: options),
+        const SizedBox(height: 10),
+        Expanded(
+            child: Container(
+          padding: const EdgeInsets.all(10),
+          color: const Color.fromRGBO(232, 248, 239, 1),
+          child: SingleChildScrollView(
+            child: Column(
+              children: const [
+                SizedBox(
+                  height: 10,
+                ),
+                ReservationCard(),
+                SizedBox(
+                  height: 10,
+                ),
+                ReservationCard(),
+                SizedBox(
+                  height: 10,
+                ),
+                ReservationCard(),
+                SizedBox(
+                  height: 10,
+                ),
+                ReservationCard(),
+              ],
+            ),
+          ),
+        ))
+      ],
     );
   }
 }

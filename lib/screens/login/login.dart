@@ -33,7 +33,7 @@ class LoginPage extends StatelessWidget {
                         fontFamily: 'Urbanist'),
                   ),
                   const SizedBox(height: 40),
-                  const LoginForm(),
+                  LoginForm(),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
