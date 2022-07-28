@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:take_a_break/screens/pay/pay_screen.dart';
 import '../screens/create_reservation/create_reservation.dart';
 import '../screens/filter_rooms/filter_rooms.dart';
 import '../screens/screens.dart';
@@ -11,6 +12,7 @@ Map<String, WidgetBuilder> getAppRoutes() {
     'profilePage': (BuildContext context) => const ProfilePage(),
     'roomDetailPage': (BuildContext context) => const DetailRoomPage(),
     'filterRoomsPage': (BuildContext context) => const FilterRoomsPage(),
+    'payPage': (BuildContext context) => const PayPage(),
     'createReservationPage': (BuildContext context) =>
         const CreateReservationPage(),
   };
