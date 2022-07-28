@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:take_a_break/Styles/buttons.dart';
 
 class TicketPage extends StatelessWidget {
@@ -16,7 +17,11 @@ class TicketPage extends StatelessWidget {
           child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
              const Text("Posadafy customer", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
              const SizedBox(height: 30,),
-             Image.asset("assets/img/QR_Code.png"),
+             QrImage(
+                data: "1234567890",
+                version: QrVersions.auto,
+                size: 200.0,
+              ),
              const SizedBox(height: 30,),
              Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
