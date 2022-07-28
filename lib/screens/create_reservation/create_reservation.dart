@@ -1,14 +1,31 @@
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
+import 'package:take_a_break/provider/user_provider.dart';
 import '../../Styles/buttons.dart';
 import '../../models/room.dart';
 import '../room-detail/widgets/room_top_information.dart';
+import 'package:intl/intl.dart';
 
-class CreateReservationPage extends StatelessWidget {
+class CreateReservationPage extends StatefulWidget {
   const CreateReservationPage({Key? key}) : super(key: key);
+
+  @override
+  State<CreateReservationPage> createState() => _CreateReservationPageState();
+}
+
+int adultsNumber = 0;
+int childrenNumber = 0;
+double totalPrice = 0;
+var date = DateTime.now();
+DateTime checkInDate = DateTime.now();
+DateTime checkOutDate = DateTime.now();
+int totalDays = 0;
+
+class _CreateReservationPageState extends State<CreateReservationPage> {
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
     final Room room = ModalRoute.of(context)!.settings.arguments as Room;
     return Scaffold(
       body: SafeArea(
@@ -57,10 +74,22 @@ class CreateReservationPage extends StatelessWidget {
                       calendarType: CalendarDatePicker2Type.range,
                       selectedDayHighlightColor:
                           Theme.of(context).primaryColor),
-                  initialValue: [
-                    DateTime(2022, 7, 27),
-                    DateTime(2022, 7, 31),
-                  ],
+                  onValueChanged: (value) => {
+                    if (value.length == 1)
+                      {print("1 no más")}
+                    else
+                      {
+                        setState(() {
+                          checkInDate = value[0]!;
+                          checkOutDate = value[1]!;
+                          totalDays =
+                              checkOutDate.difference(checkInDate).inDays;
+                          totalPrice =
+                              totalDays.toDouble() * double.parse(room.price);
+                        })
+                      }
+                  },
+                  initialValue: [checkInDate, checkOutDate],
                 ),
                 const SizedBox(
                   height: 20,
@@ -91,15 +120,19 @@ class CreateReservationPage extends StatelessWidget {
                             padding: const EdgeInsets.all(12.0),
                             child: Row(
                               children: [
-                                const Text(
-                                  "Dec 15",
-                                ),
+                                Text((DateFormat('EEEE, d MMM, yyyy')
+                                    .format(checkInDate)
+                                    .split(',')[1])),
                                 const SizedBox(
                                   width: 20,
                                 ),
-                                Icon(
-                                  Icons.calendar_month_sharp,
-                                  color: Colors.grey[500],
+                                Column(
+                                  children: [
+                                    Icon(
+                                      Icons.calendar_month_sharp,
+                                      color: Colors.grey[500],
+                                    ),
+                                  ],
                                 )
                               ],
                             ),
@@ -107,10 +140,19 @@ class CreateReservationPage extends StatelessWidget {
                         )
                       ],
                     ),
-                    const Expanded(
-                      child: Icon(
-                        Icons.arrow_right_rounded,
-                        size: 32,
+                    Expanded(
+                      child: Column(
+                        children: [
+                          const Icon(
+                            Icons.arrow_right_rounded,
+                            size: 32,
+                          ),
+                          Text("${totalDays.toString().split('.')[0]} dias",
+                              style: const TextStyle(
+                                  fontSize: 14,
+                                  fontFamily: 'Urbanist',
+                                  fontWeight: FontWeight.bold)),
+                        ],
                       ),
                     ),
                     Column(
@@ -138,9 +180,9 @@ class CreateReservationPage extends StatelessWidget {
                             padding: const EdgeInsets.all(12.0),
                             child: Row(
                               children: [
-                                const Text(
-                                  "Dec 15",
-                                ),
+                                Text((DateFormat('EEEE, d MMM, yyyy')
+                                    .format(checkOutDate)
+                                    .split(',')[1])),
                                 const SizedBox(
                                   width: 20,
                                 ),
@@ -177,7 +219,9 @@ class CreateReservationPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              updateValue("1", -1);
+                            },
                             child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.all(
@@ -195,22 +239,24 @@ class CreateReservationPage extends StatelessWidget {
                                         color: Colors.black),
                                   ),
                                 ))),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        const Text(
-                          "1",
-                          style: TextStyle(
+                        Text(
+                          adultsNumber.toString(),
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Urbanist',
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              updateValue("1", 1);
+                            },
                             child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.all(
@@ -253,7 +299,9 @@ class CreateReservationPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              updateValue("0", -1);
+                            },
                             child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.all(
@@ -274,9 +322,9 @@ class CreateReservationPage extends StatelessWidget {
                         SizedBox(
                           width: 20,
                         ),
-                        const Text(
-                          "1",
-                          style: TextStyle(
+                        Text(
+                          childrenNumber.toString(),
+                          style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Urbanist',
@@ -286,7 +334,9 @@ class CreateReservationPage extends StatelessWidget {
                           width: 20,
                         ),
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              updateValue("0", 1);
+                            },
                             child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: const BorderRadius.all(
@@ -309,8 +359,8 @@ class CreateReservationPage extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text("Total: \$280.00",
-                    style: TextStyle(
+                Text("Total: \$ $totalPrice",
+                    style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Urbanist')),
@@ -321,7 +371,7 @@ class CreateReservationPage extends StatelessWidget {
                         style: ButtonsDecoration.buttonPrimaryStyle(
                             context: context, elevation: 3),
                         onPressed: () {
-                          Navigator.pushNamed(context, 'payPage');
+                          _showConfirmDialog(room, userProvider);
                         },
                         child: const Padding(
                           padding: EdgeInsets.symmetric(
@@ -339,5 +389,58 @@ class CreateReservationPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  _showConfirmDialog(Room room, UserProvider userProvider) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Confirmar reserva"),
+            content: const Text("¿Está seguro de que desea continuar?"),
+            actions: [
+              TextButton(
+                child: const Text("Cancelar"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              TextButton(
+                child: const Text("Continuar"),
+                onPressed: () {
+                  Navigator.pop(context);
+                  Navigator.pushNamed(context, 'payPage', arguments: {
+                    "end-date": checkOutDate,
+                    "start-date": checkInDate,
+                    "id-room": room.idRoom,
+                    "id-user": userProvider.client!.idUser,
+                    "adults": adultsNumber,
+                    "children": childrenNumber,
+                    "total": totalPrice
+                  });
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  updateValue(type, int value) {
+    {
+      if (type == '1') {
+        final temp = adultsNumber + value;
+        if (temp > 4 || temp == 0) {
+          return;
+        }
+        adultsNumber += value;
+      } else {
+        final temp = childrenNumber + value;
+        if (temp > 4 || temp < 0) {
+          return;
+        }
+        childrenNumber += value;
+      }
+      setState(() {});
+    }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:take_a_break/provider/user_provider.dart';
 import '../../Styles/buttons.dart';
 import '../../models/room.dart';
 import 'widgets/comments.dart';
@@ -16,6 +18,7 @@ class DetailRoomPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final room = ModalRoute.of(context)!.settings.arguments as Room;
+    final UserProvider userProvider = Provider.of<UserProvider>(context);
     return SafeArea(
       child: Scaffold(
           floatingActionButton: FloatingActionButton(
@@ -118,9 +121,13 @@ class DetailRoomPage extends StatelessWidget {
                           style: ButtonsDecoration.buttonPrimaryStyle(
                               context: context, elevation: 3),
                           onPressed: () {
-                            Navigator.pushNamed(
-                                context, "createReservationPage",
-                                arguments: room);
+                            if (userProvider.isLoged) {
+                              Navigator.pushNamed(
+                                  context, "createReservationPage",
+                                  arguments: room);
+                            } else {
+                              Navigator.pushNamed(context, "loginPage");
+                            }
                           },
                           child: const Padding(
                             padding: EdgeInsets.all(13.0),

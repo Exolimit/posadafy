@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:take_a_break/Styles/buttons.dart';
+import 'package:take_a_break/models/booking.dart';
 import 'package:take_a_break/provider/user_provider.dart';
 import 'package:take_a_break/shared/posdafy_logo.dart';
 
@@ -10,10 +11,7 @@ import 'widgets/app_bar.dart';
 class ReservationPage extends StatelessWidget {
   ReservationPage({Key? key}) : super(key: key);
   final List<String> options = [
-    "Recomendados",
-    "Simples",
-    "Dobles",
-    "Familiar"
+    "Todas",
   ];
   @override
   Widget build(BuildContext context) {
@@ -64,36 +62,33 @@ class UserReservations extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
+
     return Column(
       children: [
         const AppBarReservation(),
-        CategoryButtons(options: options),
+        userProvider.bookingList.isEmpty
+            ? Container()
+            : CategoryButtons(options: options),
         const SizedBox(height: 10),
         Expanded(
             child: Container(
+          width: double.infinity,
           padding: const EdgeInsets.all(10),
           color: const Color.fromRGBO(232, 248, 239, 1),
           child: SingleChildScrollView(
-            child: Column(
-              children: const [
-                SizedBox(
-                  height: 10,
-                ),
-                ReservationCard(),
-                SizedBox(
-                  height: 10,
-                ),
-                ReservationCard(),
-                SizedBox(
-                  height: 10,
-                ),
-                ReservationCard(),
-                SizedBox(
-                  height: 10,
-                ),
-                ReservationCard(),
-              ],
-            ),
+            child: userProvider.isLoading || userProvider.bookingList.isEmpty
+                ? const Center(child: CircularProgressIndicator())
+                : Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ...userProvider.bookingList.map((booking) {
+                        return ReservationCard(booking: booking);
+                      }),
+                    ],
+                  ),
           ),
         ))
       ],
@@ -104,12 +99,14 @@ class UserReservations extends StatelessWidget {
 class ReservationCard extends StatelessWidget {
   const ReservationCard({
     Key? key,
+    required this.booking,
   }) : super(key: key);
-
+  final Booking booking;
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.all(10),
+        margin: const EdgeInsets.only(bottom: 15),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(10),
@@ -125,11 +122,10 @@ class ReservationCard extends StatelessWidget {
                     height: 80,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
-                      child: const FadeInImage(
+                      child: FadeInImage(
                         fadeOutDuration: Duration(milliseconds: 100),
                         fit: BoxFit.cover,
-                        image: NetworkImage(
-                            "https://s3.amazonaws.com/arc-wordpress-client-uploads/infobae-wp/wp-content/uploads/2019/05/20152251/Dorado-Beach-a-Ritz-Carlton-Reserve-3.jpg"),
+                        image: NetworkImage(booking.room!.thumnail),
                         placeholder: AssetImage('assets/img/loading.gif'),
                       ),
                     ),
@@ -138,36 +134,53 @@ class ReservationCard extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Habitación presidencial",
-                        style: TextStyle(
+                      Text(
+                        'Habitación ${booking.room!.type}',
+                        style: const TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'Urbanist'),
                       ),
-                      const Text(
-                        "Edificio 1",
+                      Text(
+                        booking.room!.building,
                         style: TextStyle(fontSize: 16, fontFamily: 'Urbanist'),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color.fromRGBO(232, 248, 239, 1),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: Text(
-                            "Pagado",
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromRGBO(98, 207, 144, 1),
-                            ),
-                          ),
-                        ),
-                      )
+                      booking.state == "0"
+                          ? Container(
+                              decoration: BoxDecoration(
+                                color: const Color.fromRGBO(232, 248, 239, 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Pagado",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromRGBO(98, 207, 144, 1),
+                                  ),
+                                ),
+                              ),
+                            )
+                          : Container(
+                              decoration: BoxDecoration(
+                                color: const Color.fromRGBO(232, 248, 239, 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Text(
+                                  "Pendiente",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color.fromARGB(255, 207, 98, 98),
+                                  ),
+                                ),
+                              ),
+                            )
                     ],
                   ),
                 ],

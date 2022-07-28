@@ -16,6 +16,6 @@ Map<String, WidgetBuilder> getAppRoutes() {
     'payPage': (BuildContext context) => const PayPage(),
     'createReservationPage': (BuildContext context) =>
         const CreateReservationPage(),
-        'ticketPage' : (BuildContext context) => const TicketPage()
+    // 'ticketPage' : (BuildContext context) =>  TicketPage(targetBooking: , )
   };
 }

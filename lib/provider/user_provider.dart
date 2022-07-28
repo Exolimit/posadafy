@@ -1,16 +1,26 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:take_a_break/models/booking.dart';
 import 'package:take_a_break/services/api_service.dart';
 
+import '../models/room.dart';
 import '../models/user.dart';
 
 class UserProvider extends ChangeNotifier {
   Client? client;
+  List<Booking> bookingList = [];
+  bool isBookingLoading = false;
   bool isLoged = false;
   bool isLoading = false;
   ApiService api = ApiService();
+
+  set IsBookingLoading(bool value) {
+    isBookingLoading = value;
+    notifyListeners();
+  }
 
   set IsLoading(bool value) {
     isLoading = value;
@@ -28,6 +38,7 @@ class UserProvider extends ChangeNotifier {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
       IsLoading = false;
+      getBookings();
       return {
         "status": true,
         "message": "Login correcto",
@@ -71,9 +82,64 @@ class UserProvider extends ChangeNotifier {
     }
   }
 
+  getBookings() {
+    bookingList = [];
+    IsLoading = true;
+    api.getAllBookings().then((value) async {
+      final decodedData = json.decode(value);
+
+      final Map<String, dynamic> roomsMap = decodedData;
+      bookingList = roomsMap
+          .map(
+            (key, value) => MapEntry(
+              key,
+              Booking.fromJson(value),
+            ),
+          )
+          .values
+          .toList();
+
+      for (var book in bookingList) {
+        final res = await api.getRoomInfo(book.idRoom);
+
+        final roomJson = json.decode(res);
+        Room tempRoom = Room.fromJson(roomJson);
+        book.room = tempRoom;
+        // Booking tempBooking = Booking.fromJson(book);
+        // tempBooking.room = tempRoom;
+        // bookingList.add(tempBooking);
+
+      }
+      filterBookingByUser();
+      notifyListeners();
+    });
+  }
+
+  filterBookingByUser() {
+    bookingList.removeWhere((element) => element.idUser != client?.idUser);
+    IsLoading = false;
+  }
+
   logoutUser() async {
     await FirebaseAuth.instance.signOut();
     IsLoged = false;
     notifyListeners();
+  }
+
+  postBooking(booking) async {
+    IsBookingLoading = true;
+    Random random = new Random();
+    int randomNumber = random.nextInt(1000);
+    final data = {
+      "end-date": booking['end-date'].millisecondsSinceEpoch,
+      "id-room": booking['id-room'].toString(),
+      "id-user": booking['id-user'].toString(),
+      "idBooking": randomNumber,
+      "start-date": booking['start-date'].millisecondsSinceEpoch,
+      "state": 0,
+    };
+    final res = await api.postBooking(data);
+    IsBookingLoading = false;
+    return true;
   }
 }

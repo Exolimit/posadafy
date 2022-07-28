@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:take_a_break/Styles/buttons.dart';
+import 'package:take_a_break/provider/user_provider.dart';
 
 enum PaymentMethod { paypal, transferwise }
 
@@ -8,13 +10,14 @@ class PayPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UserProvider userProvider = Provider.of<UserProvider>(context);
+    final bookingData = ModalRoute.of(context)!.settings.arguments as Map;
     return Scaffold(
         body: SafeArea(
             child: Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 0.0),
       child: SingleChildScrollView(
-        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Column(
             children: const [
               SizedBox(
@@ -82,19 +85,25 @@ class PayPage extends StatelessWidget {
                   ],
                 ),
               )),
-          const SizedBox(height: 300,),
+          const SizedBox(
+            height: 300,
+          ),
           SizedBox(
             width: double.infinity,
             child: Column(
-              mainAxisAlignment : MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
-            
               children: [
                 ElevatedButton(
                     style: ButtonsDecoration.buttonPrimaryStyle(
                         context: context, elevation: 3),
-                    onPressed: () {
-                      Navigator.pop(context);
+                    onPressed: () async {
+                      final res = await userProvider.postBooking(bookingData);
+                      print(res);
+                      if (res) {
+                        showSuccesAlert(context);
+                      }
+                      //Navigator.pop(context);
                     },
                     child: const Padding(
                       padding:
@@ -107,5 +116,26 @@ class PayPage extends StatelessWidget {
         ]),
       ),
     )));
+  }
+
+  showSuccesAlert(context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text("¡Pago realizado con éxito!"),
+          content: Text("¡Gracias por usar nuestros servicios!"),
+          actions: [
+            TextButton(
+              child: Text("Cerrar"),
+              onPressed: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, 'homePage', (route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
