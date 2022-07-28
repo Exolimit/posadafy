@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:take_a_break/Styles/buttons.dart';
 
+import '../../models/booking.dart';
+
 class TicketPage extends StatelessWidget {
-  const TicketPage({Key? key}) : super(key: key);
+
+  final Booking targetBooking;
+
+  const TicketPage({Key? key, required this.targetBooking}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +23,7 @@ class TicketPage extends StatelessWidget {
              const Text("Posadafy customer", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
              const SizedBox(height: 30,),
              QrImage(
-                data: "1234567890",
+                data: targetBooking.idBooking,
                 version: QrVersions.auto,
                 size: 200.0,
               ),
